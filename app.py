@@ -27,4 +27,6 @@ api.add_resource(CommentList, '/comments')
 # only the file you run is '__main__'
 if __name__ == '__main__':
     db.init_app(app)
-    app.run(port=5000, debug=True)
+    # app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5011)
+    
