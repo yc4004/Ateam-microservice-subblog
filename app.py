@@ -7,7 +7,7 @@ from resources.blog import Blog, BlogList
 from resources.comment import Comment, CommentList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dbuser:dbuserdbuser@subblogdb.c4qfxod7s5ol.us-east-1.rds.amazonaws.com/commentdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dbuser:dbuserdbuser@subblog.c4qfxod7s5ol.us-east-1.rds.amazonaws.com/commentdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'yanbing'  # app.config['JWT_SECRET_KEY']
