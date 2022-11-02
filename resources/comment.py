@@ -15,19 +15,19 @@ class Comment(Resource):
         help='Every item needs a blog id.'
     )
 
-    def get(self, name):
-        comment = CommentModel.find_by_name(name)
-        if comment:
-            return comment.json()
-        return {'message': 'comment not found'}, 404
+    # def get(self, name):
+    #     comment = CommentModel.find_by_name(name)
+    #     if comment:
+    #         return comment.json()
+    #     return {'message': 'comment not found'}, 404
     
-    def post(self, name):
-        if CommentModel.find_by_name(name):
-            return {'message': "An comment with name '{}' already exists.".format(name)}, 400
+    def post(self):
+        # if CommentModel.find_by_name(name):
+        #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
 
         data = Comment.parser.parse_args()
 
-        comment = CommentModel(name, data['content'], data['blog_id'])
+        comment = CommentModel(data['content'], data['blog_id'])
 
         try:
             comment.save_to_db()
@@ -36,26 +36,26 @@ class Comment(Resource):
 
         return comment.json(), 201 
 
-    def delete(self, name):
-        comment = CommentModel.find_by_name(name)
-        if comment:
-            comment.delete_from_db()
+    # def delete(self, name):
+    #     comment = CommentModel.find_by_name(name)
+    #     if comment:
+    #         comment.delete_from_db()
 
-        return {'message': 'Comment deleted'}
+    #     return {'message': 'Comment deleted'}
 
-    def put(self, name):       
-        data = Comment.parser.parse_args()
-        comment = CommentModel.find_by_name(name)
-        # updated_item = ItemModel(name, data['price'])
+    # def put(self, name):       
+    #     data = Comment.parser.parse_args()
+    #     comment = CommentModel.find_by_name(name)
+    #     # updated_item = ItemModel(name, data['price'])
 
-        if not comment:
-            comment = CommentModel(name, data['Blog_id'])
-        else:
-            comment.content = data['content']
+    #     if not comment:
+    #         comment = CommentModel(name, data['Blog_id'])
+    #     else:
+    #         comment.content = data['content']
         
-        comment.save_to_db()
+    #     comment.save_to_db()
         
-        return comment.json()
+    #     return comment.json()
 
 
 class CommentList(Resource):
