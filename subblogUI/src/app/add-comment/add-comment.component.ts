@@ -28,7 +28,8 @@ export class AddCommentComponent {
       this.comment.blog_id = url.split("/")[2];
       this.addcommentService.addComment(this.comment).subscribe((result: any) => {this.comment = result;
         console.log('result is ', result);}
-      )
+      );
+      window.location.href = "/posts/" + this.comment.blog_id;
     } else {
       alert('conmment required')
     }

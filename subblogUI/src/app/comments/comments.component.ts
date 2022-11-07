@@ -33,7 +33,14 @@ export class CommentsComponent {
     })
       } else {
         alert('wrong url')
-      }
+      };
 
-  }
-}
+  };
+
+  goToAddCommentPage(pageName:string) {
+    let url = this.router.url;
+    this.comments.blog_id = url.split("/")[2];
+    // this.router.navigate([`${pageName}`]);
+    window.location.href = "/posts/" + this.comments.blog_id + "/addcomment";
+  };
+};
