@@ -1,17 +1,19 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 from flask_restful import Api
 from db import db
+import json
 
 from resources.blog import Blog, BlogList
 from resources.comment import Comment, CommentList
 from flask_cors import CORS
+from comment_resource import CommentResource
 
 app = Flask(__name__)
 
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dbuser:dbuserdbuser@subblogdb.c4qfxod7s5ol.us-east-1.rds.amazonaws.com/commentdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:84443295412lx.@localhost/commentdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'yanbing'  # app.config['JWT_SECRET_KEY']
@@ -23,8 +25,18 @@ def create_tables():
 
 api.add_resource(Blog, '/blog/<string:title>')
 api.add_resource(BlogList, '/blogs')
-api.add_resource(Comment, '/comment')
+api.add_resource(Comment, '/posts/<string:blog_id>/addcomment')
 api.add_resource(CommentList, '/comments')
+
+
+@app.route("/posts/<blog_id>", methods=["GET"])
+def get_comments_by_blogid(blog_id):
+    result = CommentResource.get_comments_by_blogID(blog_id)
+    if result:
+        response = Response(json.dumps(result, default=str), status=200, content_type="application/json")
+    else:
+        response = Response("404 NOT FOUND", status=404, content_type="application/json")
+    return response
 
 
 # make it only run when we run python app.py, not for other files import app.py

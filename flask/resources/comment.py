@@ -9,25 +9,26 @@ class Comment(Resource):
         required=True,
         help='This field cannot be left blank'
     )
-    parser.add_argument('blog_id',
-        type=int,
-        required=True,
-        help='Every item needs a blog id.'
-    )
+    # parser.add_argument('blog_id',
+    #     type=int,
+    #     required=True,
+    #     help='Every item needs a blog id.'
+    # )
 
-    # def get(self, name):
-    #     comment = CommentModel.find_by_name(name)
-    #     if comment:
-    #         return comment.json()
-    #     return {'message': 'comment not found'}, 404
+    def get(self, blog_id):
+        comment = CommentModel.find_by_blog_id(blog_id)
+        if comment:
+            return comment.json()
+        return {'message': 'comment not found'}, 404
     
-    def post(self):
+
+    def post(self, blog_id):
         # if CommentModel.find_by_name(name):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
 
         data = Comment.parser.parse_args()
 
-        comment = CommentModel(data['content'], data['blog_id'])
+        comment = CommentModel(data['content'], blog_id)
 
         try:
             comment.save_to_db()
@@ -35,6 +36,8 @@ class Comment(Resource):
             return {'message': 'An error occurred inserting the item.'}, 500  # Internal server error
 
         return comment.json(), 201 
+
+
 
     # def delete(self, name):
     #     comment = CommentModel.find_by_name(name)

@@ -6,7 +6,7 @@ class BlogModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
 
-    comments = db.relationship('CommentModel', lazy='dynamic')
+    # comments = db.relationship('CommentModel', lazy='dynamic')
 
     def __init__(self, title):
         self.title = title
@@ -15,7 +15,7 @@ class BlogModel(db.Model):
         return {
             'id': self.id,
             'title': self.title, 
-            'comments': [comment.json() for comment in self.comments.all()]
+            # 'comments': [comment.json() for comment in self.comments.all()]
         }
     
     @classmethod

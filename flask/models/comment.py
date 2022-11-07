@@ -6,9 +6,10 @@ class CommentModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # name = db.Column(db.String(50))
     content = db.Column(db.String(80))
+    blog_id = db.Column(db.String(80))
 
-    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
-    blog = db.relationship('BlogModel')
+    # blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    # blog = db.relationship('BlogModel')
 
     def __init__(self, content, blog_id):
         # self.name = name
@@ -23,9 +24,9 @@ class CommentModel(db.Model):
             'blog_id': self.blog_id
         }
     
-    # @classmethod
-    # def find_by_name(cls, name):
-    #     return cls.query.filter_by(name=name).first()  # SELECT * FROM comments WHERE id=_id LIMIT 1
+    @classmethod
+    def find_by_blog_id(cls, blog_id):
+        return cls.query.filter_by(blog_id=blog_id).first()  # SELECT * FROM comments WHERE id=_id LIMIT 1
 
     @classmethod
     def find_all(cls):
@@ -40,3 +41,4 @@ class CommentModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    

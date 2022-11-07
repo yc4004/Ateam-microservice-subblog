@@ -1,27 +1,27 @@
+// imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ROUTING } from './app.routing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { RouterOutlet } from "@angular/router";
+import { AppRoutingModule } from "./app-routing.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
-import { RootComponent } from './root/root.component';
-import { AddCommentComponent } from './add-comment/add-comment.component';
-
-// import { AppComponent } from './app.component';
-
-
+// @NgModule decorator with its metadata
 @NgModule({
   declarations: [
-    RootComponent,
-    AddCommentComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    ROUTING,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterOutlet,
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [RootComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
