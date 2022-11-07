@@ -29,6 +29,7 @@ export class AddCommentComponent {
       this.addcommentService.addComment(this.comment).subscribe((result: any) => {this.comment = result;
         console.log('result is ', result);}
       );
+      alert('conmment added success!')
       window.location.href = "/posts/" + this.comment.blog_id;
     } else {
       alert('conmment required')
