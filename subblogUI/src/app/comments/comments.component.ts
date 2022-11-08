@@ -43,4 +43,20 @@ export class CommentsComponent {
     // this.router.navigate([`${pageName}`]);
     window.location.href = "/posts/" + this.comments.blog_id + "/addcomment";
   };
+
+
+  deleteById(_id: any) {
+    let url = this.router.url;
+
+    if (url.includes('posts/')) {
+      this.comments.blog_id = url.split("/")[2];
+      this.commentsService.deleteByID(_id, this.comments.blog_id).subscribe((res: any) => {
+        console.log(res + ":delete success" + _id)
+      });
+      alert('conmment delete success!')
+      window.location.href = "/posts/" + this.comments.blog_id;
+    }
+    // console.log(id)
+    // console.log(typeof id)
+  }
 };

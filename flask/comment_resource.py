@@ -33,3 +33,7 @@ class CommentResource:
         
         result = cur.fetchall()
         return result
+
+    # def delete_comment(blog_id, content):
+    #     sql = "SELECT * FROM commentdb.comments WHERE blog_id=%s and content=%s"
+

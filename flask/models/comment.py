@@ -29,6 +29,10 @@ class CommentModel(db.Model):
         return cls.query.filter_by(blog_id=blog_id).first()  # SELECT * FROM comments WHERE id=_id LIMIT 1
 
     @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()  # SELECT * FROM comments WHERE id=_id LIMIT 1
+
+    @classmethod
     def find_all(cls):
         return cls.query.all()
 

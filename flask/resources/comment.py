@@ -38,14 +38,6 @@ class Comment(Resource):
         return comment.json(), 201 
 
 
-
-    # def delete(self, name):
-    #     comment = CommentModel.find_by_name(name)
-    #     if comment:
-    #         comment.delete_from_db()
-
-    #     return {'message': 'Comment deleted'}
-
     # def put(self, name):       
     #     data = Comment.parser.parse_args()
     #     comment = CommentModel.find_by_name(name)
@@ -66,3 +58,25 @@ class CommentList(Resource):
         comments = [comment.json() for comment in CommentModel.find_all()]
         return {'comment': comments}, 200
         
+
+
+class Delete(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('id',
+        type=int,
+        required=True,
+        help='This field cannot be left blank'
+    )
+
+    def delete(self, blog_id):
+
+        data = Delete.parser.parse_args()
+        id = data['id']
+        print(id)
+
+        comment = CommentModel.find_by_id(id)
+        if comment:
+            comment.delete_from_db()
+
+        return {'message': 'Comment deleted'}

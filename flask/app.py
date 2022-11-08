@@ -5,7 +5,7 @@ from db import db
 import json
 
 from resources.blog import Blog, BlogList
-from resources.comment import Comment, CommentList
+from resources.comment import Comment, CommentList, Delete
 from flask_cors import CORS
 from comment_resource import CommentResource
 
@@ -21,11 +21,12 @@ api = Api(app)
 
 @app.before_first_request
 def create_tables():
-    db.create_all()
+    db.create_all()     
 
 api.add_resource(Blog, '/blog/<string:title>')
 api.add_resource(BlogList, '/blogs')
 api.add_resource(Comment, '/posts/<string:blog_id>/addcomment')
+api.add_resource(Delete, '/posts/<string:blog_id>')
 api.add_resource(CommentList, '/comments')
 
 

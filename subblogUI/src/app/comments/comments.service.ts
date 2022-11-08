@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Comment } from '../models/comment.model';
+// import { CommentsService }
 
 @Injectable()
 export class CommentsService {
@@ -11,4 +12,26 @@ export class CommentsService {
   getCommentsByBlogID(blog_id: string) {
     return this.http.get(this.url + '/' + blog_id);
   }
+
+  private options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    body: {
+      id: 1,
+    },
+  };
+
+  deleteByID(id: any, blog_id: string) {
+    return this.http.delete(this.url + '/' + blog_id, 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        "id": id,
+      },
+    })
+  }
+
 }
