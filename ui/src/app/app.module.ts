@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { RouterOutlet } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { RegisterComponent } from './register/register.component';
 
 // @NgModule decorator with its metadata
 @NgModule({

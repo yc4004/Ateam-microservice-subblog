@@ -11,26 +11,27 @@ import { Router } from '@angular/router';
 })
 export class AddCommentComponent {
 
-  public comment : Comment;
+  // public comment : Comment;
+  public content = '';
 
   constructor(private addcommentService: AddCommentService, 
               private router: Router) {
-              this.comment = new Comment();
+              // this.comment = new Comment();
   }
 
-
-  // get id from url, using: if (url.includes('posts/')) {url.split('') }
   addComment() {
-
     let url = this.router.url
+    let blog_id = '';
+    let user_id = '';
 
-    if (url.includes('posts/') && this.comment.content) {
-      this.comment.blog_id = url.split("/")[2];
-      this.addcommentService.addComment(this.comment).subscribe((result: any) => {this.comment = result;
+    if (url.includes('posts/') && this.content) {
+      user_id = url.split("/")[1];
+      blog_id = url.split("/")[3];
+      this.addcommentService.addComment(user_id, blog_id, this.content).subscribe((result: any) => {
         console.log('result is ', result);}
       );
       alert('conmment added success!')
-      window.location.href = "/posts/" + this.comment.blog_id;
+      window.location.href = user_id + "/posts/" + blog_id;
     } else {
       alert('conmment required')
     }

@@ -1,12 +1,20 @@
 
 <br><br>
+<!-- <br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br> -->
 
 <!--pagination for matching users-->
 <table class="table table-bordered">
     <tr *ngFor="let comment of comments">
       <td>
         {{ comment.content }} 
-        <button type="button" class="close" (click)="deleteById(comment.id)">x</button>
+        <button type="button" class="close" (click)="deleteById(comment.id, comment.owner_id)">x</button>
       </td>
     </tr>
   </table>

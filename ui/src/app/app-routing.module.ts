@@ -9,8 +9,9 @@ const routes: Routes = [
   {path: "users/:id", loadChildren: () => import("./user/user.module").then(module => module.UserModule)},
   {path: "posts", loadChildren: () => import("./post/post.module").then(module => module.PostModule)},
   {path: "createPost", loadChildren: () => import("./add-post/add-post.module").then(module => module.AddPostModule)},
-  {path: "posts/:id", loadChildren: () => import("./comments/comments.module").then(module => module.CommentsModule)},
-  {path: "posts/:id/addcomment", loadChildren: () => import("./add-comment/add-comment.module").then(module => module.AddCommentModule)},
+  {path: "register", loadChildren: () => import("./register/register.module").then(module => module.RegisterModule)},
+  {path: ":id/posts/:id", loadChildren: () => import("./comments/comments.module").then(module => module.CommentsModule)},
+  {path: ":id/posts/:id/addcomment", loadChildren: () => import("./add-comment/add-comment.module").then(module => module.AddCommentModule)},
 ]
 
 @NgModule({

@@ -25,13 +25,13 @@ def create_tables():
 
 api.add_resource(Blog, '/blog/<string:title>')
 api.add_resource(BlogList, '/blogs')
-api.add_resource(Comment, '/posts/<string:blog_id>/addcomment')
-api.add_resource(Delete, '/posts/<string:blog_id>')
+api.add_resource(Comment, '/<string:user_id>/posts/<string:blog_id>/addcomment')
+api.add_resource(Delete, '/<string:user_id>/posts/<string:blog_id>')
 api.add_resource(CommentList, '/comments')
 
 
-@app.route("/posts/<blog_id>", methods=["GET"])
-def get_comments_by_blogid(blog_id):
+@app.route("/<string:user_id>/posts/<blog_id>", methods=["GET"])
+def get_comments_by_blogid(user_id, blog_id):
     result = CommentResource.get_comments_by_blogID(blog_id)
     if result:
         response = Response(json.dumps(result, default=str), status=200, content_type="application/json")

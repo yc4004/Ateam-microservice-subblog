@@ -15,20 +15,20 @@ class Comment(Resource):
     #     help='Every item needs a blog id.'
     # )
 
-    def get(self, blog_id):
+    def get(self, user_id, blog_id):
         comment = CommentModel.find_by_blog_id(blog_id)
         if comment:
             return comment.json()
         return {'message': 'comment not found'}, 404
     
 
-    def post(self, blog_id):
+    def post(self, user_id, blog_id):
         # if CommentModel.find_by_name(name):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
 
         data = Comment.parser.parse_args()
 
-        comment = CommentModel(data['content'], blog_id)
+        comment = CommentModel(data['content'], blog_id, user_id)
 
         try:
             comment.save_to_db()
@@ -63,20 +63,21 @@ class CommentList(Resource):
 class Delete(Resource):
 
     parser = reqparse.RequestParser()
-    parser.add_argument('id',
+    parser.add_argument('id',                          
         type=int,
         required=True,
         help='This field cannot be left blank'
     )
 
-    def delete(self, blog_id):
+    def delete(self, user_id, blog_id):
 
         data = Delete.parser.parse_args()
         id = data['id']
-        print(id)
 
         comment = CommentModel.find_by_id(id)
         if comment:
             comment.delete_from_db()
+            return {'message': 'Comment deleted'}
+     
 
-        return {'message': 'Comment deleted'}
+        

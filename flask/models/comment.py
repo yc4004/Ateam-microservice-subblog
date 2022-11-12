@@ -7,21 +7,24 @@ class CommentModel(db.Model):
     # name = db.Column(db.String(50))
     content = db.Column(db.String(80))
     blog_id = db.Column(db.String(80))
+    owner_id = db.Column(db.String(80))
 
     # blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
     # blog = db.relationship('BlogModel')
 
-    def __init__(self, content, blog_id):
+    def __init__(self, content, blog_id, owner_id):
         # self.name = name
         self.content = content
         self.blog_id = blog_id
+        self.owner_id = owner_id
     
     def json(self):
         return {
             'id': self.id, 
             # 'name': self.name,
             'content': self.content, 
-            'blog_id': self.blog_id
+            'blog_id': self.blog_id,
+            'owner_id' : self.owner_id
         }
     
     @classmethod
