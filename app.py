@@ -7,7 +7,7 @@ from datetime import datetime
 
 from database_operation import DatabaseOperations
 from user_resource import UsersResource
-from resources.comment import Comment, CommentList, Delete
+from resources.comment import CommentList, Delete as deleteComment, Comment as addComment
 from flask_cors import CORS
 from comment_resource import CommentResource
 
@@ -26,86 +26,14 @@ api = Api(app)
 def create_tables():
     db.create_all()     
 
-api.add_resource(Comment, '/<string:user_id>/posts/<string:blog_id>/addcomment')
-api.add_resource(Delete, '/<string:user_id>/posts/<string:blog_id>/deletecomment')
+
+api.add_resource(addComment, '/<string:user_id>/posts/<string:blog_id>/addcomment')
+api.add_resource(deleteComment, '/<string:user_id>/posts/<string:blog_id>/deletecomment')
 api.add_resource(CommentList, '/comments')
 
 
-# search users by query string parameters (none/last name/email/both)
-# return an array of users matching query
-@app.route("/users", methods=['GET'])
-def users():
-    args = request.args.to_dict()
-    result = UsersResource.get_user_by_query(args)
-
-    if result:
-        response = Response(json.dumps(result, default=str), status=200, content_type="application/json")
-    else:
-        response = Response("404 NOT FOUND", status=404, content_type="application/json")
-    return response
-
-
-@app.route("/<string:username>", methods=["GET"])
-def get_user_by_username(username):
-    result = UsersResource.get_user_by_username(username)
-
-    if result:
-        response = Response(json.dumps(result, default=str), status=200, content_type="application/json")
-    else:
-        response = Response("404 NOT FOUND", status=404, content_type="application/json")
-    return response
-
-
-# search a user by id
-# return a single user with matching id
-@app.route("/users/<id>", methods=["GET"])
-def get_user_by_id(id):
-    result = UsersResource.get_user_by_id(id)
-
-    if result:
-        response = Response(json.dumps(result, default=str), status=200, content_type="application/json")
-    else:
-        response = Response("404 NOT FOUND", status=404, content_type="application/json")
-    return response
-
-
-# login service
-@app.route("/login", methods=["POST"])
-def check_user_login():
-
-    content_type = request.headers.get('Content-Type')
-    if content_type == 'application/json':
-        user_login_info = request.json
-        username = user_login_info['username']
-        password = user_login_info['password']
-        result = DatabaseOperations.get_by_key(username, password)
-        return result
-
-
-# logout service
-@app.route('/logout')
-def logout():
-    return redirect(url_for('login'))
-
-
-# register service
-@app.route('/register', methods=["POST"])
-def user_registration():
-    content_type = request.headers.get('Content-Type')
-    if content_type == 'application/json':
-        user_register_info = request.json
-        username = user_register_info['username']
-        password = user_register_info['password']
-        first_name = user_register_info['firstName']
-        last_name = user_register_info['lastName']
-        email_address = user_register_info['email']
-        result = DatabaseOperations.user_register(username, password, first_name, last_name, email_address)
-        #result = DatabaseOperations.get_by_key(username, password)
-        return result
-
-
-@app.route("/<string:user_id>/posts/<blog_id>/getcomments", methods=["GET"])
-def get_comments_by_blogid(user_id, blog_id):
+@app.route("/posts/<blog_id>/getcomments", methods=["GET"])
+def get_comments_by_blogid(blog_id):
     result = CommentResource.get_comments_by_blogID(blog_id)
     if result:
         response = Response(json.dumps(result, default=str), status=200, content_type="application/json")
@@ -115,8 +43,8 @@ def get_comments_by_blogid(user_id, blog_id):
     return response
 
 
-@app.route("/<string:user_id>/posts/<blog_id>/getcommentsnum", methods=["GET"])
-def get_commentsnum_by_blogid(user_id, blog_id):
+@app.route("/posts/<blog_id>/getcommentsnum", methods=["GET"])
+def get_commentsnum_by_blogid(blog_id):
     comment_num = str(CommentResource.get_comments_number(blog_id))
     return Response(comment_num, status=200, content_type="application/json")
 

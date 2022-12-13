@@ -21,6 +21,7 @@ class CommentResource:
         )
         return conn
 
+    @staticmethod
     def get_comments_by_blogID(blog_id):
         sql = "SELECT * FROM commentdb.comments WHERE blog_id=%s"
         conn = CommentResource._get_connection()
@@ -34,10 +35,8 @@ class CommentResource:
         result = cur.fetchall()
         return result
 
-    # def delete_comment(blog_id, content):
-    #     sql = "SELECT * FROM commentdb.comments WHERE blog_id=%s and content=%s"
 
-
+    @staticmethod
     def get_comments_number(blog_id):
         sql = "SELECT COUNT(*) FROM commentdb.comments WHERE blog_id=%s"
         conn = CommentResource._get_connection()
@@ -52,7 +51,8 @@ class CommentResource:
         result = result["COUNT(*)"]
         return result
         
-
+        
+    @staticmethod
     def get_commentsnum_by_username(username):
         sql = "SELECT COUNT(*) FROM commentdb.comments WHERE owner_id=%s"
         conn = CommentResource._get_connection()
