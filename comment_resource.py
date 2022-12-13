@@ -10,7 +10,8 @@ class CommentResource:
 
         usr = "root"
         pw = "84443295412lx."
-        h = "localhost"
+        # h = "localhost"
+        h = "clouddb.cvlavt0m8fg8.us-east-1.rds.amazonaws.com"
 
         conn = pymysql.connect(
             user=usr,
