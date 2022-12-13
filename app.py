@@ -3,10 +3,7 @@ from flask_restful import Api
 from db import db
 import json
 from flask_cors import CORS
-from datetime import datetime
 
-from database_operation import DatabaseOperations
-from user_resource import UsersResource
 from resources.comment import CommentList, Delete as deleteComment, Comment as addComment
 from flask_cors import CORS
 from comment_resource import CommentResource
