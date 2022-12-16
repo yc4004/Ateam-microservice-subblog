@@ -25,6 +25,7 @@ class CommentResource:
     @staticmethod
     def get_comments_by_blogID(blog_id):
         sql = "SELECT * FROM commentdb.comments WHERE blog_id=%s"
+        user_sql = "SELECT profile_img FROM users.users WHERE username=%s"
         conn = CommentResource._get_connection()
         cur = conn.cursor()
 
@@ -34,6 +35,12 @@ class CommentResource:
             return None
         
         result = cur.fetchall()
+        for each_comment in result:
+            user = each_comment['owner_id']
+            cur.execute(user_sql, user)
+            user_image = cur.fetchone()['profile_img']
+            each_comment['profile_img'] = user_image
+            
         return result
 
 
