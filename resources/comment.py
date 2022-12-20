@@ -14,11 +14,11 @@ class Comment(Resource):
         required=True,
         help='This field cannot be left blank'
     )
-    # parser.add_argument('blog_id',
-    #     type=int,
-    #     required=True,
-    #     help='Every item needs a blog id.'
-    # )
+    parser.add_argument('token',
+        type=str,
+        required=True,
+        help='Every item needs a token.'
+    )
 
     def get(self, token, blog_id):
         try:
@@ -40,10 +40,10 @@ class Comment(Resource):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
         try:
             data = Comment.parser.parse_args()
-            print(data)
-            print('\n')
+            # print(data)
+            # print('\n')
             token = data['token']
-            print(token)
+            # print(token)
             
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             auth_user_id = idinfo['email'][0: idinfo['email'].index('@')]
