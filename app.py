@@ -59,7 +59,7 @@ def get_comment_number_by_username():
     return response
 
 
-@app.route("/posts/checkbeforeDelete", methods=["GET", "POST"])
+@app.route("/posts/checkbeforeDelete", methods=["POST"])
 def jwtAuthBeforeDelete():
     content_type = request.headers.get('Content-Type')
     if content_type == 'application/json':
@@ -68,6 +68,7 @@ def jwtAuthBeforeDelete():
         try:
             idinfo = id_token.verify_oauth2_token(jwt_token, requests.Request(), CLIENT_ID)
             owner_id = idinfo['email'][0: idinfo['email'].index('@')]
+            print(owner_id)
             return owner_id
 
         except ValueError:
