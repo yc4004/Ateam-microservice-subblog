@@ -9,7 +9,7 @@ class CommentResource:
     def _get_connection():
 
         usr = "root"
-        pw = "84443295412lx."
+        pw = "015100264"
         h = "localhost"
         # h = "db6156.c4qfxod7s5ol.us-east-1.rds.amazonaws.com"
 
