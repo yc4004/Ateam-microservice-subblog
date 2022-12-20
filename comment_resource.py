@@ -73,4 +73,5 @@ class CommentResource:
         
         result = cur.fetchone()
         result = result["COUNT(*)"]
+        print(result)
         return result
