@@ -29,7 +29,7 @@ def create_tables():
     db.create_all()     
 
 
-api.add_resource(addComment, '/<string:token>/posts/<string:blog_id>/addcomment')
+api.add_resource(addComment, '/<string:user_id>/posts/<string:blog_id>/addcomment')
 api.add_resource(deleteComment, '/<string:user_id>/posts/<string:blog_id>/deletecomment')
 api.add_resource(CommentList, '/comments')
 

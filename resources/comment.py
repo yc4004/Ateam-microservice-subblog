@@ -35,24 +35,24 @@ class Comment(Resource):
             pass
     
 
-    def post(self, token, blog_id):
+    def post(self, user_id, blog_id):
         # if CommentModel.find_by_name(name):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
         try:
-            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
-            user_id = idinfo['email'][0: idinfo['email'].index('@')]
-
             data = Comment.parser.parse_args()
             comment_time = str(datetime.now().date())
+            token = data['token']
 
-            comment = CommentModel(data['content'], blog_id, user_id, comment_time)
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            auth_user_id = idinfo['email'][0: idinfo['email'].index('@')]
+            if auth_user_id == user_id:
+                try:
+                    comment = CommentModel(data['content'], blog_id, user_id, comment_time)
+                    comment.save_to_db()
+                except:
+                    return {'message': 'An error occurred inserting the item.'}, 500  # Internal server error
 
-            try:
-                comment.save_to_db()
-            except:
-                return {'message': 'An error occurred inserting the item.'}, 500  # Internal server error
-
-            return comment.json(), 201
+                return comment.json(), 201
 
         except ValueError:
             print("Auth went wrong!")
