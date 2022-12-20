@@ -40,6 +40,7 @@ class CommentResource:
             cur.execute(user_sql, user)
             user_image = cur.fetchone()['profile_img']
             each_comment['profile_img'] = user_image
+        conn.close()
             
         return result
 
@@ -56,6 +57,7 @@ class CommentResource:
             return None
         
         result = cur.fetchone()
+        conn.close()
         result = result["COUNT(*)"]
         return result
         
@@ -72,6 +74,7 @@ class CommentResource:
             return None
         
         result = cur.fetchone()
+        conn.close()
         result = result["COUNT(*)"]
         print(result)
         return result
