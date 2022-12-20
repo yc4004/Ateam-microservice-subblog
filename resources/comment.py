@@ -40,13 +40,16 @@ class Comment(Resource):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
         try:
             data = Comment.parser.parse_args()
+            print(data)
+            print('\n')
             token = data['token']
+            print(token)
             
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             auth_user_id = idinfo['email'][0: idinfo['email'].index('@')]
 
             comment_time = str(datetime.now().date())
-            
+
             if auth_user_id == user_id:
                 comment = CommentModel(data['content'], blog_id, user_id, comment_time)
             try:
