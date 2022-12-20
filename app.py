@@ -75,7 +75,6 @@ def jwtAuthBeforeDelete():
             pass
 
 
-
 # make it only run when we run python app.py, not for other files import app.py
 # only the file you run is '__main__'
 if __name__ == '__main__':

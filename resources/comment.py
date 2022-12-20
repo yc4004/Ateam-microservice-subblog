@@ -40,19 +40,21 @@ class Comment(Resource):
         #     return {'message': "An comment with name '{}' already exists.".format(name)}, 400
         try:
             data = Comment.parser.parse_args()
-            comment_time = str(datetime.now().date())
             token = data['token']
-
+            
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             auth_user_id = idinfo['email'][0: idinfo['email'].index('@')]
-            if auth_user_id == user_id:
-                try:
-                    comment = CommentModel(data['content'], blog_id, user_id, comment_time)
-                    comment.save_to_db()
-                except:
-                    return {'message': 'An error occurred inserting the item.'}, 500  # Internal server error
 
-                return comment.json(), 201
+            comment_time = str(datetime.now().date())
+            
+            if auth_user_id == user_id:
+                comment = CommentModel(data['content'], blog_id, user_id, comment_time)
+            try:
+                comment.save_to_db()
+            except:
+                return {'message': 'An error occurred inserting the item.'}, 500  # Internal server error
+
+            return comment.json(), 201
 
         except ValueError:
             print("Auth went wrong!")
