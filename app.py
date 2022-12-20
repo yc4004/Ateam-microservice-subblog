@@ -14,7 +14,7 @@ app = Flask(__name__)
 CORS(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:84443295412lx.@localhost/commentdb'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:84443295412lx.@ateam-db-final.ciqe1mhtaul1.us-east-1.rds.amazonaws.com/commentdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:84443295412lx.@subblog.csdfyku3iiif.us-east-1.rds.amazonaws.com/commentdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'yanbing'  # app.config['JWT_SECRET_KEY']
