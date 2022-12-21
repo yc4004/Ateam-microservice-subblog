@@ -32,6 +32,7 @@ class CommentResource:
         try:
             cur.execute(sql, blog_id)
         except:
+            conn.close()
             return None
         
         result = cur.fetchall()
@@ -54,6 +55,7 @@ class CommentResource:
         try:
             cur.execute(sql, blog_id)
         except:
+            conn.close()
             return None
         
         result = cur.fetchone()
@@ -71,6 +73,7 @@ class CommentResource:
         try:
             cur.execute(sql, username)
         except:
+            conn.close()
             return None
         
         result = cur.fetchone()
