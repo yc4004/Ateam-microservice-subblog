@@ -68,8 +68,8 @@ def jwtAuthBeforeDelete():
         try:
             idinfo = id_token.verify_oauth2_token(jwt_token, requests.Request(), CLIENT_ID)
             owner_id = idinfo['email'][0: idinfo['email'].index('@')]
-            print(owner_id)
-            return Response(owner_id, status=200, content_type="application/json")
+            message = {"owner_id": owner_id}
+            return Response(json.dumps(message, default=str), status=200, content_type="application/json")
 
         except ValueError:
             print("Auth went wrong!")
